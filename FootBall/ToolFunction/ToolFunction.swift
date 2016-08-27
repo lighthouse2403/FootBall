@@ -25,8 +25,7 @@ class ToolFunction: NSObject {
                 completion(result: snapshot.value!);
                 
             }else{
-                
-                
+
             }
             
             NSLog(snapshot.key);

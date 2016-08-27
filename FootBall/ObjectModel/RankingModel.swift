@@ -20,9 +20,13 @@ class RankingModel: NSObject {
     var points : Int = 0;
     var rank : Int = 0;
     var profile : NSDictionary?
+    var clubImage : UIImage?;
+    
     
     
     func initObjectModel(dictParam : NSDictionary) {
+        
+        
         
         if dictParam.objectForKey("ClubNames") != nil {
             

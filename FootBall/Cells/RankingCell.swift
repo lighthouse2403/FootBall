@@ -12,6 +12,7 @@ class RankingCell: UITableViewCell {
 
     @IBOutlet weak var lbName: UILabel!
     
+    @IBOutlet weak var imgLogo: UIImageView!
     @IBOutlet weak var lbWon: UILabel!
     @IBOutlet weak var lbDrawn: UILabel!
     @IBOutlet weak var lbLost: UILabel!

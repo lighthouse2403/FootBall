@@ -45,19 +45,24 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
 
                 //------------------- NSOPERATION ------------------
                 //save into database with NSOperation
-                let queue = NSOperationQueue();
-                
-                queue.addOperationWithBlock(){
                 //perform on background thread
+                if self.arrDate.count > 0{
+                    
+                    self.arrDate.removeAllObjects()
+
+                }
+                if self.arrRanking.count > 0{
                     
                     self.arrRanking.removeAllObjects();
-                    
-                    self .getInformationOfLeague(self.strLeague!);
-                    self.getResultOfLeague(self.strLeague!);
-                    
+
+                }
+                
+                    self.getInformationOfLeague(self.strLeague!);
+                
+                
                     //save database into core data
                     
-                }
+                
                 //-------------------
             } else {
                 //get data from database
@@ -77,6 +82,7 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
 
         
             ToolFunction.retrieveData(postRef, completion: {result in
+                NSOperationQueue().addOperationWithBlock(){
                 let dictRanking : NSDictionary = result as! NSDictionary;
                 let arrRank : NSMutableArray = NSMutableArray();
                 for key in dictRanking.allKeys{
@@ -91,20 +97,49 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
                     NSLog(key as! String);
                 }
                 self.arrRanking.addObjectsFromArray(arrRank.sortedArrayUsingDescriptors([NSSortDescriptor(key:"rank" ,ascending: true)]));
+                    self.updateLogo()
 
+                }
+                
                 NSOperationQueue.mainQueue().addOperationWithBlock(){
                     //update UI on main thread
                     
                     self.mTableView .reloadData();
                     
                 }
-                NSLog("value:%i", (dictRanking.count));
                 NSLog("loaded done");
             
             });
         
-        
-        
+    }
+    
+    func updateLogo() {
+        if arrRanking.count > 1 {
+            
+            for index in 0...(self.arrRanking.count - 1) {
+                let rankObject : RankingModel = self.arrRanking.objectAtIndex(index) as! RankingModel
+                
+                ToolFunction.loadImage("TeamLogo/" + rankObject.idClub + ".png", completion: {url in
+                    NSOperationQueue().addOperationWithBlock() {
+                        let dataImg = NSData(contentsOfURL: url)
+                        if dataImg != nil{
+                            rankObject.clubImage = UIImage(data: dataImg!)
+
+                        }
+                        
+                        NSOperationQueue.mainQueue().addOperationWithBlock(){
+                            
+                            self.mTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow:index ,inSection: 0)], withRowAnimation:UITableViewRowAnimation.None)
+                            
+                        }
+                    }
+                    
+                })
+            }
+            
+            self.getResultOfLeague(self.strLeague!);
+
+        }
     }
     
     func getResultOfLeague(strLeague : String? ) {
@@ -113,27 +148,25 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
         postRef = ref.child(parentRef).child(strLeague!);
         
             ToolFunction.retrieveData(postRef, completion: {result in
-                let dictResultInfo : NSDictionary = result as! NSDictionary;
+                NSOperationQueue().addOperationWithBlock(){
+                    let dictResultInfo : NSDictionary = result as! NSDictionary;
 
-                var intIndex = 0;
-                for key in dictResultInfo.allKeys{
-                    let arrObject : NSArray = dictResultInfo.objectForKey(key as! String) as! NSArray;
-                    self.arrDate.addObject(key as! String);
-                    let arrResultObject:NSMutableArray = [];
-                    for result in arrObject {
-                        let resultModel : ResultModel = ResultModel()
-                        resultModel.initObjectModel(result as! NSDictionary);
-                        arrResultObject.addObject(resultModel)
-
+                    var intIndex = 0;
+                    for key in dictResultInfo.allKeys{
+                        let arrObject : NSArray = dictResultInfo.objectForKey(key as! String) as! NSArray;
+                        self.arrDate.addObject(key as! String);
+                        let arrResultObject:NSMutableArray = [];
+                        for result in arrObject {
+                            let resultModel : ResultModel = ResultModel()
+                            resultModel.initObjectModel(result as! NSDictionary);
+                            arrResultObject.addObject(resultModel)
+                        }
+                        
+                        self.dictResult.setObject(arrResultObject, forKey:String(format: "%i",intIndex))
+                        intIndex += 1
                     }
-                    
-                    self.dictResult.setObject(arrResultObject, forKey:String(format: "%i",intIndex))
-                    
-                    intIndex += 1
-                    
                 }
-
-
+                
                 NSOperationQueue.mainQueue().addOperationWithBlock(){
                     //update UI on main thread
                     
@@ -144,8 +177,6 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
                 NSLog("loaded done");
                 
             });
-            
-        
         
     }
     
@@ -179,7 +210,6 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
             return arrRanking.count;
         }else
         {
-
                 if dictResult.objectForKey(String(format: "%i",section)) != nil {
                    let arrObject : NSArray = dictResult.objectForKey(String(format: "%i",section)) as! NSArray
                     return arrObject.count;
@@ -231,7 +261,7 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
                 rankObject = arrRanking.objectAtIndex(indexPath.row) as! RankingModel ;
 
             }
-            
+            cell.imgLogo.image = rankObject.clubImage;
             cell.lbName.text = rankObject.nameClub;
             cell.lbPoint.text = String(rankObject.points);
             cell.lbRank.text = String(rankObject.rank);

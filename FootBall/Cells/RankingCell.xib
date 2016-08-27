@@ -207,6 +207,7 @@
                 </variation>
             </tableViewCellContentView>
             <connections>
+                <outlet property="imgLogo" destination="KBu-Ih-vHl" id="g4C-nD-Xyb"/>
                 <outlet property="lbDrawn" destination="KmC-fY-gBp" id="sgj-bG-nfL"/>
                 <outlet property="lbGD" destination="Xxd-jW-MOP" id="ITl-89-C3A"/>
                 <outlet property="lbLost" destination="EaV-xc-ZAq" id="DiR-FO-Myp"/>

@@ -1,0 +1,6 @@
+framework module Pods_FootBallNew {
+  umbrella header "Pods-FootBallNew-umbrella.h"
+
+  export *
+  module * { export * }
+}

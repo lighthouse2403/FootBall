@@ -15,7 +15,8 @@ class ResultModel: NSObject {
     var result : String = "";
     var time : String = "";
     var date : String = "";
-
+    var awayImage : UIImage?;
+    var homeImage : UIImage?;
     
     func initObjectModel(dictParam : NSDictionary) {
         

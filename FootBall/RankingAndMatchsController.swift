@@ -58,7 +58,8 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
                 }
                 
                     self.getInformationOfLeague(self.strLeague!);
-                
+                    self.getResultOfLeague(self.strLeague!);
+
                 
                     //save database into core data
                     
@@ -127,6 +128,10 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
 
                         }
                         
+                        NSLog("Index of Ranking %i", index)
+                        
+                            self.updateLogoForResult(rankObject)
+
                         NSOperationQueue.mainQueue().addOperationWithBlock(){
                             
                             self.mTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow:index ,inSection: 0)], withRowAnimation:UITableViewRowAnimation.None)
@@ -135,11 +140,43 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
                     }
                     
                 })
+                NSLog("updating logo is finished");
             }
             
-            self.getResultOfLeague(self.strLeague!);
-
         }
+    }
+    
+    func updateLogoForResult(rank : RankingModel) {
+        for key in self.dictResult.allKeys {
+            
+            let arrResultOverDate = self.dictResult.objectForKey(key as! String) as! NSMutableArray
+            for index in 0...(arrResultOverDate.count - 1) {
+                
+                let resultModel = arrResultOverDate.objectAtIndex(index) as! ResultModel
+                
+                    if resultModel.away == rank.idClub {
+                        resultModel.awayImage = rank.clubImage
+                    }
+                    if resultModel.home == rank.idClub {
+                        resultModel.homeImage = rank.clubImage
+                    }
+               
+                arrResultOverDate.replaceObjectAtIndex(index, withObject: resultModel)
+                NSLog("Home" + resultModel.home + "Away:" + resultModel.away );
+            }
+            let resultModel = arrResultOverDate.objectAtIndex(0) as! ResultModel;
+            NSLog(resultModel.home + "Away:" + resultModel.away );
+            
+            let replaceKey : String = key as! String
+            self.dictResult.removeObjectForKey(key as! String)
+            self.dictResult.setObject(arrResultOverDate, forKey: replaceKey)
+            
+        }
+        dispatch_async(dispatch_get_main_queue(), {
+        
+            self.mTableView .reloadData()
+            
+        })
     }
     
     func getResultOfLeague(strLeague : String? ) {
@@ -158,7 +195,7 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
                         let arrResultObject:NSMutableArray = [];
                         for result in arrObject {
                             let resultModel : ResultModel = ResultModel()
-                            resultModel.initObjectModel(result as! NSDictionary);
+                            resultModel.initObjectModel(result as! NSDictionary)
                             arrResultObject.addObject(resultModel)
                         }
                         
@@ -290,6 +327,8 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
             cell.lbAway.text = resultObject.away;
             cell.lbResult.text = resultObject.result;
             cell.lbTime.text = resultObject.time;
+            cell.imgAway.image = resultObject.awayImage
+            cell.imgHome.image = resultObject.homeImage
             
             NSLog(resultObject.time);
             

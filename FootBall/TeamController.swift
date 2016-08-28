@@ -32,16 +32,24 @@ class TeamController: UIViewController,UITableViewDataSource,UITableViewDelegate
     
     override func viewWillAppear(animated: Bool) {
         
+        if self.arrResult.count > 0 {
+            
+            self.arrResult.removeAllObjects()
+            
+        }
         NSOperationQueue().addOperationWithBlock(){
         
             for key in self.dictResult.allKeys {
                 
                 let arrObject = self.dictResult.objectForKey(key as! String) as! NSMutableArray
+                
                 for resultModel in arrObject {
                     
                     let resultObject : ResultModel = resultModel as! ResultModel
                     if  resultObject.away == self.strTeamId || resultObject.home == self.strTeamId{
-                        self.arrResult .addObject(resultModel)
+                        
+                        NSLog("Home" + resultObject.home + "Away:" + resultObject.away );
+                        self.arrResult.addObject(resultObject)
                     }
                 }
                 
@@ -112,16 +120,21 @@ class TeamController: UIViewController,UITableViewDataSource,UITableViewDelegate
         
         var resultObject : ResultModel = ResultModel();
         
-        if arrResult.count > indexPath.row {
+        if arrResult.count > indexPath.section {
             
-            resultObject = arrResult.objectAtIndex(indexPath.row) as! ResultModel;
+            resultObject = arrResult.objectAtIndex(indexPath.section) as! ResultModel;
+            NSLog("Home" + resultObject.home + "Away:" + resultObject.away );
+
+            cell.lbHome.text = resultObject.home;
+            cell.lbAway.text = resultObject.away;
+            cell.lbResult.text = resultObject.result;
+            cell.lbTime.text = resultObject.time;
+            cell.imgAway.image = resultObject.awayImage
+            cell.imgHome.image = resultObject.homeImage
             
         }
         
-        cell.lbHome.text = resultObject.home;
-        cell.lbAway.text = resultObject.away;
-        cell.lbResult.text = resultObject.result;
-        cell.lbTime.text = resultObject.time;
+
         
         return cell;
     }

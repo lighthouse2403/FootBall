@@ -166,8 +166,17 @@ class TeamInfoController: UIViewController,UITableViewDataSource,UITableViewDele
             return lableDate;
         }else
         {
-            let headerView = ChampionHistoryHeaderView.instanceFromNib();
-            return headerView;
+            if arrChampion.count > 0 {
+                
+                let headerView = ChampionHistoryHeaderView.instanceFromNib();
+                return headerView;
+                
+            }else{
+            
+                return UIView()
+                
+            }
+
             
         }
         

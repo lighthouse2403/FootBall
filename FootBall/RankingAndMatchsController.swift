@@ -351,8 +351,6 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
             let teamVc = storyboard.instantiateViewControllerWithIdentifier("TeamController") as! TeamController;
             
             teamVc.strLeague = strLeague!;
-            teamVc.strTeamName = rankObject.nameClub;
-            teamVc.strTeamId = rankObject.idClub;
             teamVc.dictResult = dictResult;
             teamVc.profile = rankObject;
             

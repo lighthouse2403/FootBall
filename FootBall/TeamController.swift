@@ -18,13 +18,11 @@ class TeamController: UIViewController,UITableViewDataSource,UITableViewDelegate
     var dictResult : NSDictionary = NSDictionary();
     
     var strLeague : String = "";
-    var strTeamName : String = "";
-    var strTeamId : String = "";
     var profile : RankingModel = RankingModel();
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        self.title = strTeamName;
+        self.title = profile.nameClub;
         mTableView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0);
         mTableView .registerNib(UINib(nibName: "MatchCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "MatchCell");
         mTableView.tableFooterView = UIView();
@@ -46,7 +44,7 @@ class TeamController: UIViewController,UITableViewDataSource,UITableViewDelegate
                 for resultModel in arrObject {
                     
                     let resultObject : ResultModel = resultModel as! ResultModel
-                    if  resultObject.away == self.strTeamId || resultObject.home == self.strTeamId{
+                    if  resultObject.away == self.profile.idClub || resultObject.home == self.profile.idClub{
                         
                         NSLog("Home" + resultObject.home + "Away:" + resultObject.away );
                         self.arrResult.addObject(resultObject)
@@ -69,8 +67,6 @@ class TeamController: UIViewController,UITableViewDataSource,UITableViewDelegate
     {
         let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle());
         let teamInfoVC = storyboard.instantiateViewControllerWithIdentifier("TeamInfoController") as! TeamInfoController;
-        teamInfoVC.strTeamName = strTeamName;
-        teamInfoVC.strTeamId = strTeamId;
         teamInfoVC.strLeagueId = strLeague;
         teamInfoVC.profile = profile;
         

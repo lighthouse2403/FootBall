@@ -25,38 +25,37 @@ class TeamInfoController: UIViewController,UITableViewDataSource,UITableViewDele
     
     @IBOutlet weak var mTableView: UITableView!
     
-    var strTeamName :String = "";
     var arrPlayer : NSMutableArray = NSMutableArray();
     var arrChampion : NSMutableArray = NSMutableArray();
     
-    var strTeamId : String = "";
     var strLeagueId : String = "";
     var profile = RankingModel();
     
     lazy var ref : FIRDatabaseReference = FIRDatabase.database().reference();
-
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = strTeamName;
-        // Do any additional setup after loading the view.
-//        mTableView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0);
-    }
-    override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBarHidden = false;
+        
+        
+        self.title = profile.nameClub;
+        mImgLogoTeam.image = profile.clubImage;
         
         mLbOwnName.text = profile.profile?.objectForKey("owner") as? String;
         mLbStadiumName.text = profile.profile?.objectForKey("stadium") as? String;
         mLbCityName.text = profile.profile?.objectForKey("city") as? String;
         mLbCoatchName.text = profile.profile?.objectForKey("coach") as? String;
         
+    }
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = false;
+        
         let queue : NSOperationQueue = NSOperationQueue();
         
         queue.addOperationWithBlock()
         {
-            self.getPlayerOverTeamId(self.strTeamId);
-            self.getChampionInformation(self.strTeamId);
+            self.getPlayerOverTeamId(self.profile.idClub);
+            self.getChampionInformation(self.profile.idClub);
             
         }
     }
@@ -77,8 +76,6 @@ class TeamInfoController: UIViewController,UITableViewDataSource,UITableViewDele
                 championHistoryObject.initObjectModel(dictObject);
                 //                self.playerObject.initObjectModel(dictObject);
                 self.arrChampion.addObject(championHistoryObject);
-                
-
             }
             
             NSOperationQueue.mainQueue().addOperationWithBlock(){
@@ -87,14 +84,9 @@ class TeamInfoController: UIViewController,UITableViewDataSource,UITableViewDele
                 self.mTableView .reloadData();
                 
             }
-            
-
             NSLog("loaded done");
             
         });
-        
-        
-        
     }
     
     func getPlayerOverTeamId(strTeamId : String? ) {
@@ -110,8 +102,6 @@ class TeamInfoController: UIViewController,UITableViewDataSource,UITableViewDele
                 playerObject.initObjectModel(key as! NSMutableDictionary);
                 //                self.playerObject.initObjectModel(dictObject);
                 self.arrPlayer.addObject(playerObject);
-                
-                
             }
             
             NSOperationQueue.mainQueue().addOperationWithBlock(){
@@ -124,9 +114,6 @@ class TeamInfoController: UIViewController,UITableViewDataSource,UITableViewDele
             NSLog("loaded done");
             
         });
-        
-        
-        
     }
     
     //----------------- UI Tableview delegate --------------------
@@ -176,8 +163,6 @@ class TeamInfoController: UIViewController,UITableViewDataSource,UITableViewDele
                 return UIView()
                 
             }
-
-            
         }
         
     }

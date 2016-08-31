@@ -118,7 +118,7 @@
 		D2CD14671D71A0F8004F1163 /* Bundesliga.png in Resources */ = {isa = PBXBuildFile; fileRef = D2CD144D1D71A0F8004F1163 /* Bundesliga.png */; };
 		D2CD14681D71A0F8004F1163 /* JLeague.png in Resources */ = {isa = PBXBuildFile; fileRef = D2CD144E1D71A0F8004F1163 /* JLeague.png */; };
 		D2CD14691D71A0F8004F1163 /* LaLiga.png in Resources */ = {isa = PBXBuildFile; fileRef = D2CD144F1D71A0F8004F1163 /* LaLiga.png */; };
-		D2CD146A1D71A0F8004F1163 /* Ligue1.png in Resources */ = {isa = PBXBuildFile; fileRef = D2CD14501D71A0F8004F1163 /* Ligue1.png */; };
+		D2CD146A1D71A0F8004F1163 /* League1.png in Resources */ = {isa = PBXBuildFile; fileRef = D2CD14501D71A0F8004F1163 /* League1.png */; };
 		D2CD146B1D71A0F8004F1163 /* PremierLeague.png in Resources */ = {isa = PBXBuildFile; fileRef = D2CD14511D71A0F8004F1163 /* PremierLeague.png */; };
 		D2CD146C1D71A0F8004F1163 /* SerieA.png in Resources */ = {isa = PBXBuildFile; fileRef = D2CD14521D71A0F8004F1163 /* SerieA.png */; };
 		FD0E1B5FE7C829E72B583342 /* Pods_FootBallTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0DC0238364B35F92839AE68 /* Pods_FootBallTests.framework */; };
@@ -275,7 +275,7 @@
 		D2CD144D1D71A0F8004F1163 /* Bundesliga.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bundesliga.png; sourceTree = "<group>"; };
 		D2CD144E1D71A0F8004F1163 /* JLeague.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JLeague.png; sourceTree = "<group>"; };
 		D2CD144F1D71A0F8004F1163 /* LaLiga.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaLiga.png; sourceTree = "<group>"; };
-		D2CD14501D71A0F8004F1163 /* Ligue1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Ligue1.png; sourceTree = "<group>"; };
+		D2CD14501D71A0F8004F1163 /* League1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = League1.png; sourceTree = "<group>"; };
 		D2CD14511D71A0F8004F1163 /* PremierLeague.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PremierLeague.png; sourceTree = "<group>"; };
 		D2CD14521D71A0F8004F1163 /* SerieA.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SerieA.png; sourceTree = "<group>"; };
 		DAF40A93A8E24B34A8B21B54 /* Pods_FootBallUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FootBallUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -696,7 +696,7 @@
 				D2CD144D1D71A0F8004F1163 /* Bundesliga.png */,
 				D2CD144E1D71A0F8004F1163 /* JLeague.png */,
 				D2CD144F1D71A0F8004F1163 /* LaLiga.png */,
-				D2CD14501D71A0F8004F1163 /* Ligue1.png */,
+				D2CD14501D71A0F8004F1163 /* League1.png */,
 				D2CD14511D71A0F8004F1163 /* PremierLeague.png */,
 				D2CD14521D71A0F8004F1163 /* SerieA.png */,
 			);
@@ -872,7 +872,7 @@
 				84FD9E6C1D548AC2003C0CD1 /* GoogleService-Info.plist in Resources */,
 				84FD9E071D547F1F003C0CD1 /* Podfile in Resources */,
 				D2CD146B1D71A0F8004F1163 /* PremierLeague.png in Resources */,
-				D2CD146A1D71A0F8004F1163 /* Ligue1.png in Resources */,
+				D2CD146A1D71A0F8004F1163 /* League1.png in Resources */,
 				840FAD261D6867DE00C459A8 /* HomeHeaderView.xib in Resources */,
 				84FD9DF41D547F1F003C0CD1 /* upload-sym-util.bash in Resources */,
 				D2CD14541D71A0F8004F1163 /* Icon-40.png in Resources */,

@@ -126,8 +126,8 @@ class TeamInfoController: UIViewController,UITableViewDataSource,UITableViewDele
             
             for index in 0...(self.arrPlayer.count - 1) {
                 let playerObject : PlayerModel = self.arrPlayer.objectAtIndex(index) as! PlayerModel
-                
-                ToolFunction.loadImage("TeamLogo/" + playerObject.playerId + ".png", completion: {url in
+                let url : String = strLeagueId + "/" + self.profile.idClub + "/" + playerObject.playerId + ".png";
+                ToolFunction.loadImage(url, completion: {url in
                     NSOperationQueue().addOperationWithBlock() {
                         let dataImg = NSData(contentsOfURL: url)
                         if dataImg != nil{

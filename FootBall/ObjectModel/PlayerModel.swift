@@ -35,9 +35,9 @@ class PlayerModel: NSObject {
             
         }
         
-        if dictParam.objectForKey("playerId") != nil {
+        if dictParam.objectForKey("id") != nil {
             
-            self.playerId = dictParam.objectForKey("Result")as! String;
+            self.playerId = dictParam.objectForKey("id")as! String;
             
         }
         

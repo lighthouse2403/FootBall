@@ -17,7 +17,7 @@ class HomeController: UIViewController,UICollectionViewDelegate,UICollectionView
     
     @IBOutlet weak var mCollectionView: UICollectionView!
     
-    var arrLogoImg:[String] = ["PremierLeague","LaLiga","SerieA","Bundesliga","Ligue1","JLeague"];
+    var arrLogoImg:[String] = ["PremierLeague","LaLiga","SerieA","Bundesliga","League1","JLeague"];
     var postRef: FIRDatabaseReference!
     var commentsRef : FIRDatabaseReference!
 

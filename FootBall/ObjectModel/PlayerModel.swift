@@ -18,6 +18,7 @@ class PlayerModel: NSObject {
     var birthPalace : String = "";
     var height : Int = 0;
     var number : Int = 0;
+    var profileImage : UIImage?;
     var arrCarreer : NSMutableArray = NSMutableArray();
     
     func initObjectModel(dictParam : NSDictionary) {

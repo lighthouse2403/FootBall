@@ -54,6 +54,7 @@ class TeamInfoController: UIViewController,UITableViewDataSource,UITableViewDele
         
         queue.addOperationWithBlock()
         {
+            self.arrPlayer .removeAllObjects();
             self.getPlayerOverTeamId(self.profile.idClub);
             self.getChampionInformation(self.profile.idClub);
             
@@ -96,6 +97,8 @@ class TeamInfoController: UIViewController,UITableViewDataSource,UITableViewDele
         
         ToolFunction.retrieveData(postRef, completion: {result in
 
+            NSOperationQueue().addOperationWithBlock(){
+            
             for key in result as! NSArray{
                 
                 let playerObject : PlayerModel = PlayerModel();
@@ -104,6 +107,7 @@ class TeamInfoController: UIViewController,UITableViewDataSource,UITableViewDele
                 self.arrPlayer.addObject(playerObject);
             }
             
+            self.updateProfileImage();
             NSOperationQueue.mainQueue().addOperationWithBlock(){
                 //update UI on main thread
                 
@@ -112,8 +116,40 @@ class TeamInfoController: UIViewController,UITableViewDataSource,UITableViewDele
             }
             
             NSLog("loaded done");
+            }
             
         });
+    }
+    
+    func updateProfileImage() {
+        if arrPlayer.count > 1 {
+            
+            for index in 0...(self.arrPlayer.count - 1) {
+                let playerObject : PlayerModel = self.arrPlayer.objectAtIndex(index) as! PlayerModel
+                
+                ToolFunction.loadImage("TeamLogo/" + playerObject.playerId + ".png", completion: {url in
+                    NSOperationQueue().addOperationWithBlock() {
+                        let dataImg = NSData(contentsOfURL: url)
+                        if dataImg != nil{
+                            playerObject.profileImage = UIImage(data: dataImg!)
+                            
+                        }
+                        
+                        NSLog("Index of Ranking %i", index)
+                        
+                        
+                        NSOperationQueue.mainQueue().addOperationWithBlock(){
+                            
+                            self.mTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow:index ,inSection: 0)], withRowAnimation:UITableViewRowAnimation.None)
+                            
+                        }
+                    }
+                    
+                })
+                NSLog("updating logo is finished");
+            }
+            
+        }
     }
     
     //----------------- UI Tableview delegate --------------------

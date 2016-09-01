@@ -132,17 +132,13 @@ class TeamInfoController: UIViewController,UITableViewDataSource,UITableViewDele
                         let dataImg = NSData(contentsOfURL: url)
                         if dataImg != nil{
                             playerObject.profileImage = UIImage(data: dataImg!)
-                            
+                            NSOperationQueue.mainQueue().addOperationWithBlock(){
+                                self.mTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow:index ,inSection: 0)], withRowAnimation:UITableViewRowAnimation.None)
+                                
+                            }
+
                         }
                         
-                        NSLog("Index of Ranking %i", index)
-                        
-                        
-                        NSOperationQueue.mainQueue().addOperationWithBlock(){
-                            
-                            self.mTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow:index ,inSection: 0)], withRowAnimation:UITableViewRowAnimation.None)
-                            
-                        }
                     }
                     
                 })
@@ -209,6 +205,7 @@ class TeamInfoController: UIViewController,UITableViewDataSource,UITableViewDele
             if arrPlayer.count > indexPath.row {
                 let playerModel = arrPlayer.objectAtIndex(indexPath.row) as! PlayerModel;
                 cell.mLbName.text = playerModel.name;
+                cell.mImgAvatar.image = playerModel.profileImage
             }
 
             

@@ -37,7 +37,8 @@ class PlayerInfoController: UIViewController,UITableViewDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        mImgAvatar.layer.masksToBounds = true
+        mImgAvatar.layer.cornerRadius = mImgAvatar.frame.size.height/2
         // Do any additional setup after loading the view.
         mTableView.registerNib(UINib(nibName: "TextNormalCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "TextNormalCell");
         mTableView.registerNib(UINib(nibName: "PlayerCareerCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PlayerCareerCell");
@@ -57,6 +58,7 @@ class PlayerInfoController: UIViewController,UITableViewDelegate, UITableViewDat
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBarHidden = true;
+        arrPlayerInfo.removeAllObjects()
         
         arrPlayerInfo.addObject(playerObject.birthDate);
         arrPlayerInfo.addObject(playerObject.birthPalace);
@@ -65,6 +67,7 @@ class PlayerInfoController: UIViewController,UITableViewDelegate, UITableViewDat
         arrPlayerInfo.addObject(String(playerObject.number));
         
         mLbName.text = playerObject.name;
+        mImgAvatar.image = playerObject.profileImage
     }
 
     override func didReceiveMemoryWarning() {

@@ -124,7 +124,7 @@ class TeamInfoController: UIViewController,UITableViewDataSource,UITableViewDele
     func updateProfileImage() {
         if arrPlayer.count > 1 {
             
-            for index in 0...(self.arrPlayer.count - 1) {
+            for index in 0..<self.arrPlayer.count{
                 let playerObject : PlayerModel = self.arrPlayer.objectAtIndex(index) as! PlayerModel
                 let url : String = strLeagueId + "/" + self.profile.idClub + "/" + playerObject.playerId + ".png";
                 ToolFunction.loadImage(url, completion: {url in

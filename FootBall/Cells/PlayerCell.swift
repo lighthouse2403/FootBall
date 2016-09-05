@@ -17,6 +17,7 @@ class PlayerCell: UITableViewCell
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        mImgAvatar.layer.masksToBounds = true
         mImgAvatar.layer.cornerRadius = mImgAvatar.frame.height/2
         // Initialization code
     }

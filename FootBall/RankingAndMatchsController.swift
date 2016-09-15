@@ -209,11 +209,7 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
                     }
                
                 arrResultOverDate.replaceObjectAtIndex(index, withObject: resultModel)
-                NSLog("Home" + resultModel.homeId! + "Away:" + resultModel.awayId! );
             }
-            let resultModel = arrResultOverDate.objectAtIndex(0) as! Result;
-            NSLog(resultModel.homeId! + "Away:" + resultModel.awayId! );
-            
             let replaceKey : String = key as! String
             self.dictResult.removeObjectForKey(key as! String)
             self.dictResult.setObject(arrResultOverDate, forKey: replaceKey)

@@ -87,6 +87,8 @@
 		D010A35798C429BBC63696D5 /* Pods_FootBallUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAF40A93A8E24B34A8B21B54 /* Pods_FootBallUITests.framework */; };
 		D200EC671D57572E00D75EAF /* ResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D200EC661D57572E00D75EAF /* ResultModel.swift */; };
 		D227EF291D55F57E00FEF134 /* RankingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D227EF281D55F57E00FEF134 /* RankingModel.swift */; };
+		D2623AB91D8ADD2300400541 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2623AB81D8ADD2300400541 /* MapKit.framework */; };
+		D2623ABD1D8ADEE700400541 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623ABC1D8ADEE700400541 /* MapController.swift */; };
 		D26F1BE31D6B727900D2D518 /* championHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26F1BE21D6B727900D2D518 /* championHistoryModel.swift */; };
 		D2842B241D69D23400D399A7 /* ChampionHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2842B231D69D23400D399A7 /* ChampionHistoryCell.swift */; };
 		D2842B261D69D46D00D399A7 /* ChampionHistoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2842B251D69D46D00D399A7 /* ChampionHistoryHeaderView.swift */; };
@@ -245,6 +247,8 @@
 		CB75D822F005543694D524F2 /* Pods_FootBall.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FootBall.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D200EC661D57572E00D75EAF /* ResultModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultModel.swift; sourceTree = "<group>"; };
 		D227EF281D55F57E00FEF134 /* RankingModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingModel.swift; sourceTree = "<group>"; };
+		D2623AB81D8ADD2300400541 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		D2623ABC1D8ADEE700400541 /* MapController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		D26F1BE21D6B727900D2D518 /* championHistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = championHistoryModel.swift; sourceTree = "<group>"; };
 		D2842B231D69D23400D399A7 /* ChampionHistoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChampionHistoryCell.swift; sourceTree = "<group>"; };
 		D2842B251D69D46D00D399A7 /* ChampionHistoryHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChampionHistoryHeaderView.swift; sourceTree = "<group>"; };
@@ -290,6 +294,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2623AB91D8ADD2300400541 /* MapKit.framework in Frameworks */,
 				4BE40F0D1D59EC91000AC74C /* CoreData.framework in Frameworks */,
 				84FD9DFC1D547F1F003C0CD1 /* GoogleNetworkingUtilities.framework in Frameworks */,
 				84FD9E0B1D547F1F003C0CD1 /* GoogleIPhoneUtilities.framework in Frameworks */,
@@ -397,6 +402,7 @@
 				84FD9D6A1D547C52003C0CD1 /* Info.plist */,
 				84FD9D5B1D547C52003C0CD1 /* FootBall.xcdatamodeld */,
 				840FAD271D686D5700C459A8 /* Constant.h */,
+				D2623ABC1D8ADEE700400541 /* MapController.swift */,
 			);
 			path = FootBall;
 			sourceTree = "<group>";
@@ -709,6 +715,7 @@
 		F1077B2BDF55688AA741A88D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D2623AB81D8ADD2300400541 /* MapKit.framework */,
 				4BE40F0C1D59EC91000AC74C /* CoreData.framework */,
 				CB75D822F005543694D524F2 /* Pods_FootBall.framework */,
 				B0DC0238364B35F92839AE68 /* Pods_FootBallTests.framework */,
@@ -1043,6 +1050,7 @@
 				84FD9DE71D547F1F003C0CD1 /* RankingAndMatchsController.swift in Sources */,
 				D2CA15621D54B5CF00D7ED9C /* Ranking+CoreDataProperties.swift in Sources */,
 				D2842B241D69D23400D399A7 /* ChampionHistoryCell.swift in Sources */,
+				D2623ABD1D8ADEE700400541 /* MapController.swift in Sources */,
 				84FD9E0E1D547F1F003C0CD1 /* TeamController.swift in Sources */,
 				84FD9E091D547F1F003C0CD1 /* README.md in Sources */,
 				84FD9DE31D547F1F003C0CD1 /* AFURLSessionManager.m in Sources */,

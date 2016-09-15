@@ -18,6 +18,7 @@ pod 'Firebase/Messaging'
 pod 'Firebase/RemoteConfig'
 pod 'Firebase/Storage'
 pod 'MagicalRecord'
+pod ‘MapKit’
 
   # Pods for FootBall
 

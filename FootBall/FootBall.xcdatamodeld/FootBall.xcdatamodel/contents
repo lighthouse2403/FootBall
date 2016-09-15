@@ -1,27 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G31" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Automatic">
     <entity name="Ranking" representedClassName=".Ranking">
+        <attribute name="c1Won" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="clubId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="clubName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="coach" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="drawn" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="founded" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="goalsDefference" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="goalsFor" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="leagueId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="logo" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="lost" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="owner" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="played" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="points" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="rank" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="stadium" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="teamId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="won" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <userInfo/>
     </entity>
     <entity name="Result" representedClassName=".Result" syncable="YES">
         <attribute name="awayId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="awayLogo" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="homeId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="homeLogo" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="result" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Ranking" positionX="261" positionY="189" width="128" height="195"/>
-        <element name="Result" positionX="117" positionY="189" width="128" height="118"/>
+        <element name="Ranking" positionX="261" positionY="189" width="128" height="343"/>
+        <element name="Result" positionX="117" positionY="189" width="128" height="148"/>
     </elements>
 </model>

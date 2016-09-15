@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FIRApp.configure();
         FIRDatabase.database().reference()
+
         return true
     }
 
@@ -108,6 +109,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Core Data Saving support
 
+    lazy var backgroundMoc : NSManagedObjectContext = {
+    
+        let coordinator = self.persistentStoreCoordinator
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = coordinator
+        return managedObjectContext
+    
+    }()
+    
+    
     func saveContext () {
         if managedObjectContext.hasChanges {
             do {

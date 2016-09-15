@@ -15,11 +15,33 @@ class CareerModel: NSObject {
     var numberGoals :Int = 0;
 
     
-//    func initWithObject(time:String, team: String, numberApps: Int, numberGls: Int)
-//    {
-//        self.time = time;
-//        self.team = team;
-//        self.numberAppearances = numberApps;
-//        self.numberGoals = numberGls;
-//    }
+    
+    func initWithObject(dictParam : NSDictionary)
+    {
+        if dictParam.objectForKey("time") != nil {
+            
+            self.time = dictParam.objectForKey("time") as! String;
+            
+        }
+        
+        if dictParam.objectForKey("team") != nil {
+            
+            self.team = dictParam.objectForKey("team")as! String;
+            
+        }
+        
+        if dictParam.objectForKey("numberAppearances") != nil {
+            
+            self.numberAppearances = dictParam.objectForKey("numberAppearances")as! Int;
+            
+        }
+        
+        if dictParam.objectForKey("numberGoals") != nil {
+            
+            self.numberGoals = dictParam.objectForKey("numberGoals") as! Int;
+            
+        }
+
+    }
+    
 }

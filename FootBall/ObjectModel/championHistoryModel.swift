@@ -18,27 +18,27 @@ class championHistoryModel: NSObject {
     
     func initObjectModel(dictParam : NSDictionary) {
         
-        if dictParam.objectForKey("Year") != nil {
+        if dictParam.objectForKey("year") != nil {
             
-            self.year = dictParam.objectForKey("Year") as! String;
-            
-        }
-        
-        if dictParam.objectForKey("Rate") != nil {
-            
-            self.rate = dictParam.objectForKey("Rate")as! String;
+            self.year = dictParam.objectForKey("year") as! String;
             
         }
         
-        if dictParam.objectForKey("Stadium") != nil {
+        if dictParam.objectForKey("rate") != nil {
             
-            self.stadium = dictParam.objectForKey("Stadium")as! String;
+            self.rate = dictParam.objectForKey("rate")as! String;
             
         }
         
-        if dictParam.objectForKey("Runner-up") != nil {
+        if dictParam.objectForKey("stadium") != nil {
             
-            self.runnerUp = dictParam.objectForKey("Runner-up") as! String;
+            self.stadium = dictParam.objectForKey("stadium")as! String;
+            
+        }
+        
+        if dictParam.objectForKey("runner-up") != nil {
+            
+            self.runnerUp = dictParam.objectForKey("runner-up") as! String;
             
         }
         

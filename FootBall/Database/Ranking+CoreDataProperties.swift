@@ -2,7 +2,7 @@
 //  Ranking+CoreDataProperties.swift
 //  FootBall
 //
-//  Created by IOSTEAM on 8/10/16.
+//  Created by Nguyen Hai Dang on 9/8/16.
 //  Copyright © 2016 Nguyen Hai Dang. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -14,15 +14,25 @@ import CoreData
 
 extension Ranking {
 
+    @NSManaged var c1Won: NSNumber?
+    @NSManaged var city: String?
     @NSManaged var clubId: String?
+    @NSManaged var coach: String?
+    @NSManaged var country: String?
     @NSManaged var drawn: NSNumber?
+    @NSManaged var founded: String?
+    @NSManaged var goalsDefference: NSNumber?
     @NSManaged var goalsFor: NSNumber?
     @NSManaged var leagueId: String?
     @NSManaged var lost: NSNumber?
-    @NSManaged var clubName: String?
+    @NSManaged var name: String?
+    @NSManaged var owner: String?
     @NSManaged var played: NSNumber?
     @NSManaged var points: NSNumber?
     @NSManaged var rank: NSNumber?
+    @NSManaged var stadium: String?
+    @NSManaged var teamId: String?
     @NSManaged var won: NSNumber?
+    @NSManaged var logo: NSData?
 
 }

@@ -68,6 +68,12 @@ class PlayerInfoController: UIViewController,UITableViewDelegate, UITableViewDat
         
         mLbName.text = playerObject.name;
         mImgAvatar.image = playerObject.profileImage
+        
+        NSOperationQueue().addOperationWithBlock(){
+        
+        self.getCountry()
+
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -76,10 +82,26 @@ class PlayerInfoController: UIViewController,UITableViewDelegate, UITableViewDat
     }
     
     //HANDLE DATABASE
-    func savePlayerInformation(dictPlayer : NSDictionary) {
+    func getCountry() {
         
-        
-        
+                let url : String = "Country/" + playerObject.country + ".png";
+                ToolFunction.loadImage(url, completion: {url in
+                    NSOperationQueue().addOperationWithBlock() {
+                        let dataImg = NSData(contentsOfURL: url)
+                        if dataImg != nil{
+                            NSOperationQueue.mainQueue().addOperationWithBlock(){
+                                self.mImgCover.image = UIImage(data: dataImg!)
+                                
+                            }
+                            
+                        }
+                        
+                    }
+                    
+                })
+                NSLog("updating logo is finished");
+            
+            
     }
     
     func getPlayerOverTeamId(strTeamId : String? ) {
@@ -115,7 +137,7 @@ class PlayerInfoController: UIViewController,UITableViewDelegate, UITableViewDat
         
         
     }
-    
+
     //-------------------- UITABLEVIEW DELEGATE ----------------------
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

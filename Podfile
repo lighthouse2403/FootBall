@@ -17,6 +17,7 @@ pod 'Firebase/Invites'
 pod 'Firebase/Messaging'
 pod 'Firebase/RemoteConfig'
 pod 'Firebase/Storage'
+pod 'MagicalRecord'
 
   # Pods for FootBall
 

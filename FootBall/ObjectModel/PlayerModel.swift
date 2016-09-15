@@ -16,16 +16,16 @@ class PlayerModel: NSObject {
     var position : String = "";
     var birthDate : String = "";
     var birthPalace : String = "";
-    var height : Int = 0;
+    var height : String = "";
     var number : Int = 0;
     var profileImage : UIImage?;
     var arrCarreer : NSMutableArray = NSMutableArray();
     
     func initObjectModel(dictParam : NSDictionary) {
         
-        if dictParam.objectForKey("Name") != nil {
+        if dictParam.objectForKey("name") != nil {
             
-            self.name = dictParam.objectForKey("Name") as! String;
+            self.name = dictParam.objectForKey("name") as! String;
             
         }
         
@@ -43,8 +43,25 @@ class PlayerModel: NSObject {
         
         if dictParam.objectForKey("position") != nil {
             
-            self.position = dictParam.objectForKey("position") as! String;
+            let positionString : String = dictParam.objectForKey("position") as! String;
             
+            if positionString == "GK" {
+                
+                self.position = "Goal Keeper"
+                
+            }else if positionString == "FW" {
+            
+                self.position = "Foward"
+                
+            }else if positionString == "DF" {
+            
+                self.position = "Defender"
+            
+            }else {
+            
+                self.position = "Midfielder"
+                
+            }
         }
         
         if dictParam.objectForKey("birthDate") != nil {
@@ -59,7 +76,7 @@ class PlayerModel: NSObject {
         }
         if dictParam.objectForKey("height") != nil {
             
-            self.height = dictParam.objectForKey("height")as! Int;
+            self.height = dictParam.objectForKey("height")as! String;
             
         }
         if dictParam.objectForKey("number") != nil {

@@ -11,6 +11,7 @@
 		4BE40F0D1D59EC91000AC74C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BE40F0C1D59EC91000AC74C /* CoreData.framework */; };
 		840FAD241D6867B800C459A8 /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840FAD231D6867B800C459A8 /* HomeHeaderView.swift */; };
 		840FAD261D6867DE00C459A8 /* HomeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840FAD251D6867DE00C459A8 /* HomeHeaderView.xib */; };
+		84B7F72B1D829D81002BDA5A /* club@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B7F72A1D829D81002BDA5A /* club@2x.png */; };
 		84FD9D5A1D547C52003C0CD1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FD9D591D547C52003C0CD1 /* AppDelegate.swift */; };
 		84FD9D5D1D547C52003C0CD1 /* FootBall.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 84FD9D5B1D547C52003C0CD1 /* FootBall.xcdatamodeld */; };
 		84FD9D641D547C52003C0CD1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84FD9D621D547C52003C0CD1 /* Main.storyboard */; };
@@ -149,6 +150,7 @@
 		840FAD231D6867B800C459A8 /* HomeHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
 		840FAD251D6867DE00C459A8 /* HomeHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeHeaderView.xib; sourceTree = "<group>"; };
 		840FAD271D686D5700C459A8 /* Constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
+		84B7F72A1D829D81002BDA5A /* club@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "club@2x.png"; sourceTree = "<group>"; };
 		84FD9D561D547C52003C0CD1 /* FootBall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FootBall.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84FD9D591D547C52003C0CD1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84FD9D5C1D547C52003C0CD1 /* FootBall.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FootBall.xcdatamodel; sourceTree = "<group>"; };
@@ -649,6 +651,7 @@
 		D2CD14351D71A0F8004F1163 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				84B7F72A1D829D81002BDA5A /* club@2x.png */,
 				D2CD14361D71A0F8004F1163 /* ios */,
 				D2CD144C1D71A0F8004F1163 /* League */,
 			);
@@ -790,7 +793,7 @@
 				TargetAttributes = {
 					84FD9D551D547C52003C0CD1 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = G9WVW3GC5H;
+						DevelopmentTeam = 78F7F9Y9CK;
 					};
 					84FD9D6E1D547C52003C0CD1 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -828,6 +831,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84FD9E221D548297003C0CD1 /* MatchCell.xib in Resources */,
+				84B7F72B1D829D81002BDA5A /* club@2x.png in Resources */,
 				84FD9E011D547F1F003C0CD1 /* GPPACLPickerResources.bundle in Resources */,
 				84FD9DF01D547F1F003C0CD1 /* batch-upload in Resources */,
 				D2CD14571D71A0F8004F1163 /* Icon-60@2x.png in Resources */,
@@ -1202,7 +1206,8 @@
 			baseConfigurationReference = EFB88155701BFD114B82AFF0 /* Pods-FootBall.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: DINH SY PHAM (G9WVW3GC5H)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/FootBall/SDK/AdMob",
@@ -1220,9 +1225,9 @@
 				INFOPLIST_FILE = FootBall/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.lighthouse.FootBall;
+				PRODUCT_BUNDLE_IDENTIFIER = lighthouse.FootBall;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "632a54d1-0965-42aa-96e4-4f399e7c1015";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -1231,7 +1236,8 @@
 			baseConfigurationReference = 8B172D0EB1D4A676B00AE4BF /* Pods-FootBall.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: DINH SY PHAM (G9WVW3GC5H)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/FootBall/SDK/AdMob",
@@ -1249,9 +1255,9 @@
 				INFOPLIST_FILE = FootBall/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.lighthouse.FootBall;
+				PRODUCT_BUNDLE_IDENTIFIER = lighthouse.FootBall;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "632a54d1-0965-42aa-96e4-4f399e7c1015";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

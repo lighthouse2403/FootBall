@@ -17,7 +17,7 @@ class DatabaseManager: NSObject {
     //------ Save Ranking --------
     class func saveDataFromServer(entityName : String , dictTeamRank : NSDictionary){
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate ;
-        let managedContext = appDelegate.managedObjectContext
+        let managedContext = appDelegate.backgroundMoc
 
         let entity =  NSEntityDescription.entityForName(entityName,inManagedObjectContext:managedContext)
         
@@ -26,15 +26,40 @@ class DatabaseManager: NSObject {
         for key in dictTeamRank.allKeys {
             
             if dictTeamRank.objectForKey(key) != nil{
-                
-                newTeamRanking.setValue(dictTeamRank.objectForKey(key), forKey:key as! String);
-                
+                if key as! String == "profile" {
+                    let dictProfile = dictTeamRank.objectForKey(key)
+                    
+                    for keyProfile in dictProfile!.allKeys{
+                    
+                        if dictTeamRank.objectForKey(keyProfile) != nil {
+                            newTeamRanking.setValue(dictProfile!.objectForKey(keyProfile), forKey:keyProfile as! String);
+                        }
+                    
+                    }
+                    
+                    
+                }else{
+                    
+                    newTeamRanking.setValue(dictTeamRank.objectForKey(key), forKey:key as! String);
+                    
+                }
             }
             
             
         }
         
+        do {
+            
+            try appDelegate.managedObjectContext.save()
 
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nserror = error as NSError
+            NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
+            abort()
+        }
+        
     }
     
 //------------------------------- RANKING --------------------------------
@@ -51,7 +76,7 @@ class DatabaseManager: NSObject {
         
         let fetchRequest = NSFetchRequest();
         fetchRequest.entity = entity;
-        fetchRequest.predicate = NSPredicate(format:"leagueId == %@",strLeague);
+//        fetchRequest.predicate = NSPredicate(format:"leagueId == %@",strLeague);
         do {
         
             let arrRanking = try managedContext.executeFetchRequest(fetchRequest);

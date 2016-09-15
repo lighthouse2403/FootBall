@@ -10,79 +10,79 @@ import UIKit
 
 class RankingModel: NSObject {
 
-    var idClub : String = "";
-    var nameClub : String = "";
+    var clubId : String = "";
+    var name : String = "";
     var played : Int = 0;
     var won : Int = 0;
     var drawn : Int = 0;
     var lost : Int = 0;
-    var goalsDifference : Int = 0;
+    var goalsDefference : Int = 0;
     var points : Int = 0;
     var rank : Int = 0;
     var profile : NSDictionary?
+    var goalsDifference : Int = 0
     var clubImage : UIImage?;
-    
-    
+
     
     func initObjectModel(dictParam : NSDictionary) {
         
         
         
-        if dictParam.objectForKey("ClubNames") != nil {
+        if dictParam.objectForKey("clubId") != nil {
             
-            self.idClub = dictParam.objectForKey("ClubNames") as! String;
-            
-        }
-        
-        if dictParam.objectForKey("Name") != nil {
-            
-            self.nameClub = dictParam.objectForKey("Name")as! String;
+            self.clubId = dictParam.objectForKey("clubId") as! String;
             
         }
         
-        if dictParam.objectForKey("GamesPlayed") != nil {
+        if dictParam.objectForKey("name") != nil {
             
-            self.played = dictParam.objectForKey("GamesPlayed")as! Int;
-            
-        }
-        
-        if dictParam.objectForKey("Wins") != nil {
-            
-            self.won = dictParam.objectForKey("Wins") as! Int;
+            self.name = dictParam.objectForKey("name")as! String;
             
         }
         
-        if dictParam.objectForKey("Draws") != nil {
+        if dictParam.objectForKey("played") != nil {
             
-            self.drawn = dictParam.objectForKey("Draws")as! Int;
-            
-        }
-        
-        if dictParam.objectForKey("Loses") != nil {
-            
-            self.lost = dictParam.objectForKey("Loses")as! Int;
+            self.played = dictParam.objectForKey("played")as! Int;
             
         }
         
-        if dictParam.objectForKey("GD") != nil {
+        if dictParam.objectForKey("won") != nil {
             
-            self.goalsDifference = dictParam.objectForKey("GD")as! Int;
-            
-        }
-        
-        if dictParam.objectForKey("Points") != nil {
-            
-            self.points = dictParam.objectForKey("Points")as! Int;
+            self.won = dictParam.objectForKey("won") as! Int;
             
         }
         
-        if dictParam.objectForKey("Rank") != nil {
+        if dictParam.objectForKey("drawn") != nil {
             
-            self.rank = dictParam.objectForKey("Rank")as! Int;
+            self.drawn = dictParam.objectForKey("drawn")as! Int;
+            
+        }
+        
+        if dictParam.objectForKey("lost") != nil {
+            
+            self.lost = dictParam.objectForKey("lost")as! Int;
+            
+        }
+        
+        if dictParam.objectForKey("goalsDefference") != nil {
+            
+            self.goalsDifference = dictParam.objectForKey("goalsDefference")as! Int;
+            
+        }
+        
+        if dictParam.objectForKey("points") != nil {
+            
+            self.points = dictParam.objectForKey("points")as! Int;
+            
+        }
+        
+        if dictParam.objectForKey("rank") != nil {
+            
+            self.rank = dictParam.objectForKey("rank")as! Int;
             
         }
         if dictParam.objectForKey("profile") != nil {
-            
+                        
             self.profile = dictParam.objectForKey("profile")as! NSDictionary!;
             
         }

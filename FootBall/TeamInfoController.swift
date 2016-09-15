@@ -29,7 +29,7 @@ class TeamInfoController: UIViewController,UITableViewDataSource,UITableViewDele
     var arrChampion : NSMutableArray = NSMutableArray();
     
     var strLeagueId : String = "";
-    var profile = RankingModel();
+    var profile : Ranking?;
     
     lazy var ref : FIRDatabaseReference = FIRDatabase.database().reference();
     
@@ -38,27 +38,48 @@ class TeamInfoController: UIViewController,UITableViewDataSource,UITableViewDele
         super.viewDidLoad()
         
         
-        self.title = profile.nameClub;
-        mImgLogoTeam.image = profile.clubImage;
-        
-        mLbOwnName.text = profile.profile?.objectForKey("owner") as? String;
-        mLbStadiumName.text = profile.profile?.objectForKey("stadium") as? String;
-        mLbCityName.text = profile.profile?.objectForKey("city") as? String;
-        mLbCoatchName.text = profile.profile?.objectForKey("coach") as? String;
-        
-    }
-    override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBarHidden = false;
+        self.title = profile!.name;
+        if profile!.logo != nil {
+            
+            mImgLogoTeam.image = UIImage(data:profile!.logo!);
+
+        }
+        if profile!.owner != nil {
+            
+            mLbOwnName.text = profile!.owner!
+            
+        }
+        if profile!.coach != nil {
+            
+            mLbCoatchName.text = profile!.coach!
+            
+        }
+        if profile!.stadium != nil {
+            
+            mLbStadiumName.text = profile!.stadium!
+            
+        }
+        if profile!.city != nil {
+            
+            mLbCityName.text = profile!.city!
+            
+        }
         
         let queue : NSOperationQueue = NSOperationQueue();
         
         queue.addOperationWithBlock()
-        {
-            self.arrPlayer .removeAllObjects();
-            self.getPlayerOverTeamId(self.profile.idClub);
-            self.getChampionInformation(self.profile.idClub);
-            
+            {
+                self.arrPlayer .removeAllObjects();
+                self.getPlayerOverTeamId(self.profile!.clubId);
+                self.getChampionInformation(self.profile!.clubId);
+                
         }
+        
+    }
+    override func viewWillAppear(animated: Bool) {
+        
+        self.navigationController?.navigationBarHidden = false;
+        
     }
     
     //------------------ Get data from server ------------------
@@ -126,7 +147,7 @@ class TeamInfoController: UIViewController,UITableViewDataSource,UITableViewDele
             
             for index in 0..<self.arrPlayer.count{
                 let playerObject : PlayerModel = self.arrPlayer.objectAtIndex(index) as! PlayerModel
-                let url : String = strLeagueId + "/" + self.profile.idClub + "/" + playerObject.playerId + ".png";
+                let url : String = strLeagueId + "/" + self.profile!.clubId! + "/" + playerObject.playerId + ".png";
                 ToolFunction.loadImage(url, completion: {url in
                     NSOperationQueue().addOperationWithBlock() {
                         let dataImg = NSData(contentsOfURL: url)

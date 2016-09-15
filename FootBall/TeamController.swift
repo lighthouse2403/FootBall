@@ -18,51 +18,49 @@ class TeamController: UIViewController,UITableViewDataSource,UITableViewDelegate
     var dictResult : NSDictionary = NSDictionary();
     
     var strLeague : String = "";
-    var profile : RankingModel = RankingModel();
+    var profile : Ranking?;
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        self.title = profile.nameClub;
+        self.title = profile!.name;
         mTableView.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0);
         mTableView .registerNib(UINib(nibName: "MatchCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "MatchCell");
         mTableView.tableFooterView = UIView();
+        
+        self.addResult()
     }
     
     override func viewWillAppear(animated: Bool) {
         
+
+    }
+    
+    func addResult(){
+    
         if self.arrResult.count > 0 {
             
             self.arrResult.removeAllObjects()
             
         }
-        NSOperationQueue().addOperationWithBlock(){
         
-            for key in self.dictResult.allKeys {
-                
-                let arrObject = self.dictResult.objectForKey(key as! String) as! NSMutableArray
-                
-                for resultModel in arrObject {
-                    
-                    let resultObject : ResultModel = resultModel as! ResultModel
-                    if  resultObject.away == self.profile.idClub || resultObject.home == self.profile.idClub{
-                        
-                        NSLog("Home" + resultObject.home + "Away:" + resultObject.away );
-                        self.arrResult.addObject(resultObject)
-                    }
-                }
-                
-            }
-            NSOperationQueue.mainQueue().addOperationWithBlock(){
-                
-                self.mTableView .reloadData();
+        for key in self.dictResult.allKeys{
             
+            let arrObject = self.dictResult.objectForKey(key as! String) as! NSMutableArray
+            
+            for resultModel in arrObject {
+                
+                let resultObject : Result = resultModel as! Result
+                if  resultObject.awayId == self.profile!.clubId || resultObject.homeId == self.profile!.clubId{
+                    
+                    NSLog("Home" + resultObject.homeId! + "Away:" + resultObject.awayId! );
+                    self.arrResult.addObject(resultObject)
+                }
             }
-        
+            
         }
-
-        
-    }
+        self.mTableView .reloadData();
     
+    }
     func actionPushToTeamInfo()
     {
         let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle());
@@ -101,7 +99,7 @@ class TeamController: UIViewController,UITableViewDataSource,UITableViewDelegate
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        let resultMode : ResultModel = arrResult.objectAtIndex(section) as! ResultModel;
+        let resultMode : Result = arrResult.objectAtIndex(section) as! Result;
         
         let lableDate : UILabel = UILabel.init(frame: CGRectMake(0, 0, self.view.frame.size.width, 30));
         lableDate.text = resultMode.date;
@@ -114,19 +112,19 @@ class TeamController: UIViewController,UITableViewDataSource,UITableViewDelegate
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("MatchCell", forIndexPath: indexPath) as! MatchCell;
         
-        var resultObject : ResultModel = ResultModel();
+        var resultObject : Result = Result();
         
         if arrResult.count > indexPath.section {
             
-            resultObject = arrResult.objectAtIndex(indexPath.section) as! ResultModel;
-            NSLog("Home" + resultObject.home + "Away:" + resultObject.away );
+            resultObject = arrResult.objectAtIndex(indexPath.section) as! Result;
+            NSLog("Home" + resultObject.homeId! + "Away:" + resultObject.awayId! );
 
-            cell.lbHome.text = resultObject.home;
-            cell.lbAway.text = resultObject.away;
+            cell.lbHome.text = resultObject.homeId;
+            cell.lbAway.text = resultObject.awayId;
             cell.lbResult.text = resultObject.result;
             cell.lbTime.text = resultObject.time;
-            cell.imgAway.image = resultObject.awayImage
-            cell.imgHome.image = resultObject.homeImage
+            cell.imgAway.image = UIImage(data: resultObject.awayLogo!)
+            cell.imgHome.image = UIImage(data: resultObject.homeLogo!)
             
         }
         

@@ -20,33 +20,33 @@ class ResultModel: NSObject {
     
     func initObjectModel(dictParam : NSDictionary) {
         
-        if dictParam.objectForKey("Away") != nil {
+        if dictParam.objectForKey("away") != nil {
             
-            self.away = dictParam.objectForKey("Away") as! String;
-            
-        }
-        
-        if dictParam.objectForKey("Home") != nil {
-            
-            self.home = dictParam.objectForKey("Home")as! String;
+            self.away = dictParam.objectForKey("away") as! String;
             
         }
         
-        if dictParam.objectForKey("Result") != nil {
+        if dictParam.objectForKey("home") != nil {
             
-            self.result = dictParam.objectForKey("Result")as! String;
-            
-        }
-        
-        if dictParam.objectForKey("Time") != nil {
-            
-            self.time = dictParam.objectForKey("Time") as! String;
+            self.home = dictParam.objectForKey("home")as! String;
             
         }
         
-        if dictParam.objectForKey("Date") != nil {
+        if dictParam.objectForKey("result") != nil {
             
-            self.date = dictParam.objectForKey("Date")as! String;
+            self.result = dictParam.objectForKey("result")as! String;
+            
+        }
+        
+        if dictParam.objectForKey("time") != nil {
+            
+            self.time = dictParam.objectForKey("time") as! String;
+            
+        }
+        
+        if dictParam.objectForKey("date") != nil {
+            
+            self.date = dictParam.objectForKey("date")as! String;
             
         }
         

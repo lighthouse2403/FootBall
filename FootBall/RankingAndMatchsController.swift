@@ -8,13 +8,14 @@
 
 import UIKit
 import Firebase
+import CoreData
 
 class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     @IBOutlet weak var mSegment: UISegmentedControl!
     @IBOutlet weak var mTableView: UITableView!
     
     lazy var ref : FIRDatabaseReference = FIRDatabase.database().reference();
-    
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var arrRanking : NSMutableArray = [];
     var arrDate : NSMutableArray = [];
     var dictResult: NSMutableDictionary = NSMutableDictionary()
@@ -31,48 +32,55 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
         // Do any additional setup after loading the view, typically from a nib.
         self.setupTableview();
         
+        self.addObject()
         
     }
     
     
     override func viewWillAppear(animated: Bool) {
+    
+    }
+    
+    func addObject(){
         
         let connectedRef = FIRDatabase.database().referenceWithPath(".info/connected")
         connectedRef.observeEventType(.Value, withBlock: { snapshot in
             if let connected = snapshot.value as? Bool where connected {
                 //get data from firebase server
                 print("Connected")
-
+                
                 //------------------- NSOPERATION ------------------
                 //save into database with NSOperation
                 //perform on background thread
                 if self.arrDate.count > 0{
                     
                     self.arrDate.removeAllObjects()
-
+                    
                 }
                 if self.arrRanking.count > 0{
                     
                     self.arrRanking.removeAllObjects();
-
+                    
                 }
                 
-                    self.getInformationOfLeague(self.strLeague!);
-                    self.getResultOfLeague(self.strLeague!);
-
+                self.getInformationOfLeague(self.strLeague!);
+                self.getResultOfLeague(self.strLeague!);
                 
-                    //save database into core data
-                    
+                
+                //save database into core data
+                
                 
                 //-------------------
             } else {
                 //get data from database
+                let arrRanking = DatabaseManager.getRankingOverLeague(self.strLeague!)
+                self.arrRanking.addObjectsFromArray(arrRanking! as [AnyObject])
+                self.mTableView.reloadData()
                 print("Not connected")
             }
         })
         
     }
-    
     //------------------ GET RANK AND RESULT ----------------------
     func getInformationOfLeague(strLeague : String? ) {
         let parentRef = "Rank";
@@ -88,26 +96,51 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
                 let arrRank : NSMutableArray = NSMutableArray();
                 for key in dictRanking.allKeys{
 
-                    let dictObject :NSMutableDictionary = dictRanking.objectForKey(key) as! NSMutableDictionary;
+                    let dictObject : NSMutableDictionary = dictRanking.objectForKey(key) as! NSMutableDictionary;
 
-                    let rankObject : RankingModel = RankingModel();
-                    rankObject.initObjectModel(dictObject);
+                    let entity = NSEntityDescription.entityForName("Ranking", inManagedObjectContext:self.appDelegate.backgroundMoc)
+
+                    let rankObject : Ranking = Ranking(entity:entity!,insertIntoManagedObjectContext:self.appDelegate.backgroundMoc)
                     
+                    dictObject.setObject(strLeague!, forKey:"leagueId")
+                    rankObject.initObjectModel(dictObject);
+                    do {
+                        
+                        try self.appDelegate.managedObjectContext.save()
+                        
+                    } catch {
+                        // Replace this implementation with code to handle the error appropriately.
+                        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                        let nserror = error as NSError
+                        NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
+                        abort()
+                    }
                     arrRank.addObject(rankObject)
                     
+
+//                    self.saveRanking(dictObject)
                     NSLog(key as! String);
                 }
-                self.arrRanking.addObjectsFromArray(arrRank.sortedArrayUsingDescriptors([NSSortDescriptor(key:"rank" ,ascending: true)]));
+
+                    self.arrRanking.addObjectsFromArray(arrRank.sortedArrayUsingDescriptors([NSSortDescriptor(key:"rank" ,ascending: true)]));
+                    
+                    NSOperationQueue.mainQueue().addOperationWithBlock(){
+                        //update UI on main thread
+                        if self.arrRanking.count > 0 {
+                            
+                            NSLog("count %i",self.arrRanking.count)
+                            
+                            self.mTableView.reloadData()
+                            
+                        }
+                    }
+                    
                     self.updateLogo()
 
                 }
                 
-                NSOperationQueue.mainQueue().addOperationWithBlock(){
-                    //update UI on main thread
-                    
-                    self.mTableView .reloadData();
-                    
-                }
+
+                
                 NSLog("loaded done");
             
             });
@@ -118,14 +151,29 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
         if arrRanking.count > 1 {
             
             for index in 0...(self.arrRanking.count - 1) {
-                let rankObject : RankingModel = self.arrRanking.objectAtIndex(index) as! RankingModel
+                let rankObject = self.arrRanking.objectAtIndex(index) as! Ranking
                 
-                ToolFunction.loadImage("TeamLogo/" + rankObject.idClub + ".png", completion: {url in
+                ToolFunction.loadImage("TeamLogo/" + rankObject.clubId! + ".png", completion: {url in
                     NSOperationQueue().addOperationWithBlock() {
                         let dataImg = NSData(contentsOfURL: url)
+                        
                         if dataImg != nil{
-                            rankObject.clubImage = UIImage(data: dataImg!)
+                            do{
 
+                                rankObject.logo = dataImg!
+                                self.arrRanking.replaceObjectAtIndex(index, withObject: rankObject)
+                                try dataImg?.writeToFile(rankObject.clubId! + ".png", options: NSDataWritingOptions.DataWritingFileProtectionNone)
+                                
+                            }catch{
+                            
+                            
+                            }
+                            
+
+                        }else{
+                        
+                        NSLog("logo is nil")
+                            
                         }
                         
                         NSLog("Index of Ranking %i", index)
@@ -133,7 +181,6 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
                             self.updateLogoForResult(rankObject)
 
                         NSOperationQueue.mainQueue().addOperationWithBlock(){
-                            
                             self.mTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow:index ,inSection: 0)], withRowAnimation:UITableViewRowAnimation.None)
                             
                         }
@@ -146,26 +193,26 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
         }
     }
     
-    func updateLogoForResult(rank : RankingModel) {
+    func updateLogoForResult(rank : Ranking) {
         for key in self.dictResult.allKeys {
             
             let arrResultOverDate = self.dictResult.objectForKey(key as! String) as! NSMutableArray
             for index in 0...(arrResultOverDate.count - 1) {
                 
-                let resultModel = arrResultOverDate.objectAtIndex(index) as! ResultModel
+                let resultModel = arrResultOverDate.objectAtIndex(index) as! Result
                 
-                    if resultModel.away == rank.idClub {
-                        resultModel.awayImage = rank.clubImage
+                    if resultModel.awayId == rank.clubId {
+                        resultModel.awayLogo = rank.logo
                     }
-                    if resultModel.home == rank.idClub {
-                        resultModel.homeImage = rank.clubImage
+                    if resultModel.homeId == rank.clubId {
+                        resultModel.homeLogo = rank.logo
                     }
                
                 arrResultOverDate.replaceObjectAtIndex(index, withObject: resultModel)
-                NSLog("Home" + resultModel.home + "Away:" + resultModel.away );
+                NSLog("Home" + resultModel.homeId! + "Away:" + resultModel.awayId! );
             }
-            let resultModel = arrResultOverDate.objectAtIndex(0) as! ResultModel;
-            NSLog(resultModel.home + "Away:" + resultModel.away );
+            let resultModel = arrResultOverDate.objectAtIndex(0) as! Result;
+            NSLog(resultModel.homeId! + "Away:" + resultModel.awayId! );
             
             let replaceKey : String = key as! String
             self.dictResult.removeObjectForKey(key as! String)
@@ -194,7 +241,10 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
                         self.arrDate.addObject(key as! String);
                         let arrResultObject:NSMutableArray = [];
                         for result in arrObject {
-                            let resultModel : ResultModel = ResultModel()
+                            let entity = NSEntityDescription.entityForName("Result", inManagedObjectContext:self.appDelegate.backgroundMoc)
+                            
+                            let resultModel : Result = Result(entity:entity!,insertIntoManagedObjectContext:self.appDelegate.backgroundMoc)
+                            
                             resultModel.initObjectModel(result as! NSDictionary)
                             arrResultObject.addObject(resultModel)
                         }
@@ -214,6 +264,14 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
                 NSLog("loaded done");
                 
             });
+        
+    }
+    
+    //--------------- CORE DATA ---------------
+    
+    func saveRanking(dictRankOfTeam : NSDictionary) {
+        
+            DatabaseManager.saveDataFromServer("Ranking", dictTeamRank: dictRankOfTeam)
         
     }
     
@@ -293,20 +351,30 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
             // Ranking
             let cell = tableView.dequeueReusableCellWithIdentifier("RankingCell", forIndexPath: indexPath) as! RankingCell;
             
-            var rankObject : RankingModel = RankingModel();
             if arrRanking.count > indexPath.row {
-                rankObject = arrRanking.objectAtIndex(indexPath.row) as! RankingModel ;
+                let rankObject :Ranking = arrRanking.objectAtIndex(indexPath.row) as! Ranking ;
+                NSLog("IndexPath:%i ",indexPath.row)
+                NSLog("Name:%@",rankObject.clubId!)
+                if rankObject.logo != nil {
+                    
+                    cell.imgLogo.image = UIImage(data: rankObject.logo!);
+                    
+                }else{
+                
+                    cell.imgLogo.image = UIImage(named:"club")
+                }
+                cell.lbName.text = rankObject.name!;
+                cell.lbPoint.text = String(rankObject.points!);
+                cell.lbRank.text = String(rankObject.rank!);
+                cell.lbPlayed.text = String(rankObject.played!);
+                cell.lbWon.text = String(rankObject.won!)
+                cell.lbDrawn.text = String(rankObject.drawn!)
+                cell.lbLost.text = String(rankObject.lost!)
+                cell.lbGD.text = String(rankObject.goalsDefference!)
 
+                
             }
-            cell.imgLogo.image = rankObject.clubImage;
-            cell.lbName.text = rankObject.nameClub;
-            cell.lbPoint.text = String(rankObject.points);
-            cell.lbRank.text = String(rankObject.rank);
-            cell.lbPlayed.text = String(rankObject.played);
-            cell.lbWon.text = String(rankObject.won);
-            cell.lbDrawn.text = String(rankObject.won);
-            cell.lbLost.text = String(rankObject.won);
-            cell.lbGD.text = String(rankObject.goalsDifference);
+
             
             return cell;
         }else
@@ -314,23 +382,23 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
             // Matchs
             let cell = tableView.dequeueReusableCellWithIdentifier("MatchCell", forIndexPath: indexPath) as! MatchCell;
             
-            var resultObject : ResultModel = ResultModel();
+            var resultObject : Result = Result();
             let arrObject : NSArray = dictResult.objectForKey(String(format: "%i",indexPath.section)) as! NSArray
             
             if arrObject.count > indexPath.row {
                 
-                resultObject = arrObject.objectAtIndex(indexPath.row) as! ResultModel;
+                resultObject = arrObject.objectAtIndex(indexPath.row) as! Result;
                 
             }
             
-            cell.lbHome.text = resultObject.home;
-            cell.lbAway.text = resultObject.away;
+            cell.lbHome.text = resultObject.homeId;
+            cell.lbAway.text = resultObject.awayId;
             cell.lbResult.text = resultObject.result;
             cell.lbTime.text = resultObject.time;
-            cell.imgAway.image = resultObject.awayImage
-            cell.imgHome.image = resultObject.homeImage
+            cell.imgAway.image = UIImage(data:resultObject.awayLogo!)
+            cell.imgHome.image = UIImage(data:resultObject.homeLogo!)
             
-            NSLog(resultObject.time);
+            NSLog(resultObject.time!);
             
             return cell;
         }
@@ -340,9 +408,9 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
         if (mSegment.selectedSegmentIndex == 0)
         {
             // Team Matching
-            var rankObject : RankingModel = RankingModel();
+            var rankObject : Ranking?;
             if arrRanking.count > indexPath.row {
-                rankObject = arrRanking.objectAtIndex(indexPath.row) as! RankingModel ;
+                rankObject = arrRanking.objectAtIndex(indexPath.row) as? Ranking ;
                 
             }
             
@@ -352,7 +420,7 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
             
             teamVc.strLeague = strLeague!;
             teamVc.dictResult = dictResult;
-            teamVc.profile = rankObject;
+            teamVc.profile = rankObject!;
             
             self.navigationController?.pushViewController(teamVc, animated: true);
         }else

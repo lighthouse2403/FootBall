@@ -19,6 +19,8 @@ pod 'Firebase/RemoteConfig'
 pod 'Firebase/Storage'
 pod 'MagicalRecord'
 pod 'GooglePlaces'
+pod 'MapKit'
+
 
   # Pods for FootBall
 

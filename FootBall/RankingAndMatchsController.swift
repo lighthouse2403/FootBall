@@ -382,7 +382,7 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
             // Matchs
             let cell = tableView.dequeueReusableCellWithIdentifier("MatchCell", forIndexPath: indexPath) as! MatchCell;
             
-            var resultObject : Result = Result();
+            var resultObject : Result?;
             let arrObject : NSArray = dictResult.objectForKey(String(format: "%i",indexPath.section)) as! NSArray
             
             if arrObject.count > indexPath.row {
@@ -391,14 +391,16 @@ class RankingAndMatchsController: UIViewController,UITableViewDataSource,UITable
                 
             }
             
-            cell.lbHome.text = resultObject.homeId;
-            cell.lbAway.text = resultObject.awayId;
-            cell.lbResult.text = resultObject.result;
-            cell.lbTime.text = resultObject.time;
-            cell.imgAway.image = UIImage(data:resultObject.awayLogo!)
-            cell.imgHome.image = UIImage(data:resultObject.homeLogo!)
-            
-            NSLog(resultObject.time!);
+            cell.lbHome.text = resultObject?.homeId;
+            cell.lbAway.text = resultObject?.awayId;
+            cell.lbResult.text = resultObject?.result;
+            cell.lbTime.text = resultObject?.time;
+            if resultObject?.awayLogo != nil {
+                cell.imgAway.image = UIImage(data:resultObject!.awayLogo!)
+            }
+            if resultObject?.awayLogo != nil {
+                cell.imgHome.image = UIImage(data:resultObject!.homeLogo!)
+            }
             
             return cell;
         }
